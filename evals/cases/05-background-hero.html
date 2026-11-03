@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eval 05: background hero and duplicate images</title>
+  <style>
+    /* bug: the LCP is a CSS background, not preloaded, no srcset, no reserved space */
+    .hero { background: url("/images/hero-4000.jpg") center / cover; min-height: 60vh; }
+
+    .mobile-only { display: block; }
+    .desktop-only { display: none; }
+    @media (min-width: 768px) {
+      .mobile-only { display: none; }
+      .desktop-only { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero"><h1>Welcome</h1></section>
+
+  <!-- bug: two images switched with display: none; both download -->
+  <img class="mobile-only" src="/images/promo-mobile.jpg" width="750" height="1000" alt="Promotion">
+  <img class="desktop-only" src="/images/promo-desktop.jpg" width="1920" height="800" alt="Promotion">
+
+  <!-- bug: different crops in one srcset -->
+  <img src="/images/feature-wide.jpg"
+       srcset="/images/feature-tall-600.jpg 600w, /images/feature-wide-1600.jpg 1600w"
+       sizes="100vw" width="1600" height="900" alt="Feature" loading="lazy">
+</body>
+</html>

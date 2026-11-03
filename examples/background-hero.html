@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Background image hero example</title>
+
+  <!--
+    Use this only when the hero MUST be a CSS background.
+    Recommended instead: <img> with object-fit (examples/hero-lcp.html).
+
+    The browser finds CSS backgrounds late, so preload the file that the CSS will choose.
+    One preload per breakpoint (media), AVIF only (type): browsers without AVIF skip the preload.
+    The media queries must match the CSS media queries exactly.
+  -->
+  <link rel="preload" as="image" fetchpriority="high" type="image/avif"
+        media="(max-width: 767px)" href="/images/hero-tall-750.avif">
+  <link rel="preload" as="image" fetchpriority="high" type="image/avif"
+        media="(min-width: 768px)" href="/images/hero-wide-1920.avif">
+
+  <style>
+    .hero {
+      aspect-ratio: 4 / 5;                     /* reserve space: no CLS */
+      background-color: #1f2937;               /* placeholder colour */
+      background-size: cover;                  /* crop, never stretch */
+      background-position: 50% 40%;
+      background-image: url("/images/hero-tall-750.jpg");   /* fallback for old browsers */
+      background-image: image-set(
+        "/images/hero-tall-750.avif" type("image/avif"),
+        "/images/hero-tall-750.webp" type("image/webp"),
+        "/images/hero-tall-750.jpg"  type("image/jpeg")
+      );
+      display: grid; place-items: center; color: #fff;
+    }
+    @media (min-width: 768px) {
+      .hero {
+        aspect-ratio: 21 / 9;
+        background-image: url("/images/hero-wide-1920.jpg");
+        background-image: image-set(
+          "/images/hero-wide-1920.avif" type("image/avif"),
+          "/images/hero-wide-1920.webp" type("image/webp"),
+          "/images/hero-wide-1920.jpg"  type("image/jpeg")
+        );
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- role="img" + aria-label only if the background shows information. If it is decorative, leave them out. -->
+  <section class="hero" role="img" aria-label="Runner on a mountain trail at sunrise">
+    <h1>Background hero</h1>
+  </section>
+</body>
+</html>

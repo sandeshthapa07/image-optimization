@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carousel example</title>
+  <style>
+    img { max-width: 100%; height: auto; display: block; }
+    .carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+    .slide { flex: 0 0 100%; scroll-snap-align: start; aspect-ratio: 16 / 9; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+  </style>
+</head>
+<body>
+  <div class="carousel" aria-roledescription="carousel" aria-label="Featured">
+    <!-- Slide 1: visible at load, the LCP candidate -->
+    <div class="slide">
+      <img src="/images/slide-1-1280.jpg"
+           srcset="/images/slide-1-640.jpg 640w, /images/slide-1-1280.jpg 1280w, /images/slide-1-1920.jpg 1920w"
+           sizes="100vw" width="1920" height="1080"
+           alt="New collection: autumn jackets"
+           fetchpriority="high">
+    </div>
+
+    <!-- Slides 2+: not visible at load -->
+    <div class="slide">
+      <img src="/images/slide-2-1280.jpg"
+           srcset="/images/slide-2-640.jpg 640w, /images/slide-2-1280.jpg 1280w, /images/slide-2-1920.jpg 1920w"
+           sizes="100vw" width="1920" height="1080"
+           alt="Free shipping on orders over $50"
+           loading="lazy" fetchpriority="low" decoding="async">
+    </div>
+    <div class="slide">
+      <img src="/images/slide-3-1280.jpg"
+           srcset="/images/slide-3-640.jpg 640w, /images/slide-3-1280.jpg 1280w, /images/slide-3-1920.jpg 1920w"
+           sizes="100vw" width="1920" height="1080"
+           alt="Gift cards"
+           loading="lazy" fetchpriority="low" decoding="async">
+    </div>
+  </div>
+
+  <!--
+    If you use a carousel library (Swiper, Splide, Slick, Embla, ...):
+    - turn off its JavaScript lazy loading for slide 1 (no data-src on slide 1)
+    - use native loading="lazy" for the other slides
+    - make sure that the library does not hide slide 1 until JavaScript runs (that delays LCP)
+  -->
+</body>
+</html>

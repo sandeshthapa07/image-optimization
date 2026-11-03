@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OG image template (1200x630)</title>
+  <!--
+    A 1200x630 social share image as an HTML page. Edit the text and colours, then take a screenshot.
+
+    Screenshot with headless Chrome (Windows paths shown; on macOS use the Chrome app path):
+      chrome --headless --hide-scrollbars --window-size=1200,630 --screenshot=og.png file:///C:/path/og-image-template.html
+    Then compress it (and make the X/square versions):
+      node scripts/make-social-images.mjs og.png --fit=contain --padding=0 --presets=og
+
+    Show the safe-zone guides while designing: open the file with #guides at the end of the URL.
+    The same layout works as a Satori / next/og template (flexbox only, no grid).
+  -->
+  <style>
+    :root { --bg: #111827; --fg: #ffffff; --accent: #e11d48; --muted: #9ca3af; }
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      background: var(--bg); color: var(--fg);
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    }
+    .card {
+      box-sizing: border-box; width: 1200px; height: 630px;
+      padding: 60px;                         /* the safe zone starts 60px from each edge */
+      display: flex; flex-direction: column; justify-content: space-between;
+      background: radial-gradient(circle at 85% 20%, rgba(225, 29, 72, .35), transparent 45%), var(--bg);
+    }
+    .brand { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 700; }
+    .logo { width: 56px; height: 56px; border-radius: 14px; background: var(--accent); }
+    .title { font-size: 76px; line-height: 1.08; font-weight: 800; max-width: 960px; margin: 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 30px; color: var(--muted); }
+
+    /* guides: open with #guides */
+    .guide { display: none; position: fixed; pointer-events: none; }
+    :target ~ .guide, body:has(#guides:target) .guide { display: block; }
+    .guide--safe { left: 60px; top: 60px; width: 1080px; height: 510px; outline: 2px dashed #22d3ee; }
+    .guide--x { left: 0; top: 15px; width: 1200px; height: 600px; outline: 2px dashed #facc15; }   /* X 2:1 crop */
+    .guide--square { left: 285px; top: 0; width: 630px; height: 630px; outline: 2px dashed #a3e635; } /* square crop */
+  </style>
+</head>
+<body>
+  <span id="guides"></span>
+  <div class="card">
+    <div class="brand"><div class="logo"></div>Acme</div>
+    <h1 class="title">Trail running shoes that grip on every surface</h1>
+    <div class="meta"><span>acme.com/shoes</span><span>From $129</span></div>
+  </div>
+  <div class="guide guide--safe"></div>
+  <div class="guide guide--x"></div>
+  <div class="guide guide--square"></div>
+</body>
+</html>

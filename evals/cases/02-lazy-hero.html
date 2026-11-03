@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eval 02: slow hero, wrong priorities</title>
+  <link rel="preload" as="image" href="/images/promo.jpg">
+</head>
+<body>
+  <!-- bug: the LCP image is lazy-loaded and has no dimensions -->
+  <img class="hero" src="/images/hero.jpg" loading="lazy" alt="Summer sale">
+
+  <!-- bug: JavaScript lazy loading on an above-the-fold banner -->
+  <img class="banner lazyload" data-src="/images/banner.jpg" width="1200" height="300" alt="Free shipping">
+
+  <!-- bug: srcset with w descriptors and no sizes; fetchpriority high on every card -->
+  <div class="grid">
+    <img src="/images/p1-800.jpg" srcset="/images/p1-400.jpg 400w, /images/p1-800.jpg 800w, /images/p1-1600.jpg 1600w" width="1600" height="1200" alt="Product 1" fetchpriority="high">
+    <img src="/images/p2-800.jpg" srcset="/images/p2-400.jpg 400w, /images/p2-800.jpg 800w, /images/p2-1600.jpg 1600w" width="1600" height="1200" alt="Product 2" fetchpriority="high">
+    <img src="/images/p3-800.jpg" srcset="/images/p3-400.jpg 400w, /images/p3-800.jpg 800w, /images/p3-1600.jpg 1600w" width="1600" height="1200" alt="Product 3" fetchpriority="high">
+    <img src="/images/p4-800.jpg" srcset="/images/p4-400.jpg 400w, /images/p4-800.jpg 800w, /images/p4-1600.jpg 1600w" width="1600" height="1200" alt="Product 4" fetchpriority="high">
+  </div>
+
+  <!-- bug: preloaded at the top, but lazy here -->
+  <img src="/images/promo.jpg" width="1200" height="400" loading="lazy" alt="Promotion">
+
+  <!-- bug: missing alt and dimensions -->
+  <img src="/images/footer-logo.png">
+</body>
+</html>
