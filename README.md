@@ -52,6 +52,53 @@ image-optimization/
 
 The skill uses the open **Agent Skills** format (a folder with a `SKILL.md`). Tools that support it load the skill automatically when a task matches its description. For tools that do not support it, use a file from `adapters/`.
 
+### Option 1: `npx skills` (recommended)
+
+The [`skills` CLI](https://github.com/vercel-labs/skills) installs the skill into one or more agents (Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI, OpenCode, and others). Run it with `npx` (Node.js); nothing else to set up.
+
+```bash
+# Interactive: choose the agents, and project or global install
+npx skills add sandeshthapa07/image-optimization
+
+# Into the current project, for specific agents
+npx skills add sandeshthapa07/image-optimization -a claude-code -a cursor
+
+# Global (user level) instead of the current project
+npx skills add sandeshthapa07/image-optimization -g
+
+# Every supported agent, no prompts
+npx skills add sandeshthapa07/image-optimization --all
+
+# Show what the repository contains, without installing
+npx skills add sandeshthapa07/image-optimization --list
+```
+
+Manage it later:
+
+```bash
+npx skills list                        # installed skills
+npx skills update image-optimization   # get the latest version
+npx skills remove image-optimization   # uninstall
+```
+
+- A project install puts the files in `.agents/skills/image-optimization/` and links them into each agent's folder (for example `.claude/skills/image-optimization`). Use `--copy` to copy the files instead of creating links.
+- The command is `npx skills add`, not `npx skills install` (`experimental_install` only restores skills from a `skills-lock.json` file).
+- Review a skill before you install it: skills run with your agent's permissions.
+
+### Option 2: git clone
+
+```bash
+# Claude Code, for all your projects
+git clone https://github.com/sandeshthapa07/image-optimization.git ~/.claude/skills/image-optimization
+
+# Claude Code, for one project (run in the project folder)
+git clone https://github.com/sandeshthapa07/image-optimization.git .claude/skills/image-optimization
+```
+
+Update with `git pull` in that folder.
+
+### Option 3: manual copy per tool
+
 > Skill folder locations can change between tool versions. If your tool does not pick up the skill, check its docs, or use the adapter in the last column.
 
 | Tool | Install the skill | Fallback adapter |
