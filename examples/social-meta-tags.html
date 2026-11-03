@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trail running shoes | Acme</title>
+  <meta name="description" content="Lightweight shoes for trail and road, with a grippy sole and a breathable upper.">
+  <link rel="canonical" href="https://acme.com/shoes/trail">
+
+  <!--
+    Social share tags. Rules:
+    - in the server HTML (crawlers do not run JavaScript)
+    - absolute https URLs on the production domain
+    - one image: 1200x630 JPG/PNG under ~300 KB, with the real width/height below
+    Create the files: node scripts/make-social-images.mjs shoe.jpg --presets=og,twitter --base-url=https://acme.com
+    Check the page:   node scripts/check-social-meta.mjs https://acme.com/shoes/trail
+  -->
+
+  <!-- Open Graph: Facebook, LinkedIn, WhatsApp, Slack, Discord, Telegram, iMessage, Teams, Bluesky, ... -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Acme">
+  <meta property="og:title" content="Trail running shoes">
+  <meta property="og:description" content="Lightweight shoes for trail and road, with a grippy sole and a breathable upper.">
+  <meta property="og:url" content="https://acme.com/shoes/trail">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://acme.com/social/trail-og-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Red trail running shoe on a rocky mountain path">
+
+  <!-- X (Twitter). twitter:card is required; X uses og:* for missing twitter:* tags. -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@acme">
+  <!-- Optional: an exact 2:1 crop for X. Leave it out to use og:image (X crops it slightly). -->
+  <meta name="twitter:image" content="https://acme.com/social/trail-twitter-1200x600.jpg">
+  <meta name="twitter:image:alt" content="Red trail running shoe on a rocky mountain path">
+
+  <!-- Optional extras -->
+  <meta name="twitter:label1" content="Price">          <!-- Slack shows these as extra rows -->
+  <meta name="twitter:data1" content="$129">
+  <meta name="theme-color" content="#e11d48">           <!-- Discord embed colour, mobile browser UI -->
+  <meta name="robots" content="max-image-preview:large"><!-- large images in Google Discover -->
+
+  <!-- Icons (other images in <head>) -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"> <!-- 180x180 -->
+  <link rel="manifest" href="/manifest.webmanifest">         <!-- 192x192 + 512x512 icons, one maskable -->
+
+  <!-- Google: structured data images in 16:9, 4:3 and 1:1 (each at least 1200px wide) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Trail running shoes",
+    "image": [
+      "https://acme.com/social/trail-google-16x9-1200x675.jpg",
+      "https://acme.com/social/trail-google-4x3-1200x900.jpg",
+      "https://acme.com/social/trail-google-1x1-1200x1200.jpg"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <h1>Trail running shoes</h1>
+
+  <!-- On-page product image. data-pin-media gives Pinterest a tall 2:3 version for the Save button. -->
+  <img src="/images/trail-960.jpg"
+       srcset="/images/trail-480.jpg 480w, /images/trail-960.jpg 960w, /images/trail-1440.jpg 1440w"
+       sizes="(min-width: 1024px) 50vw, 100vw"
+       width="1440" height="1080"
+       alt="Red trail running shoe on a rocky mountain path"
+       fetchpriority="high"
+       data-pin-media="https://acme.com/social/trail-pinterest-1000x1500.jpg">
+</body>
+</html>

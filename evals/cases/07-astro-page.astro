@@ -1,0 +1,13 @@
+---
+// Eval 07: Astro 5 page
+import { Image } from 'astro:assets';
+import cover from '../assets/cover.jpg';
+---
+<!-- bug: LCP image keeps the default loading="lazy" -->
+<Image src={cover} alt="Conference stage" class="hero-image" />
+
+<!-- bug: public/ image without width/height -->
+<Image src="/team.jpg" alt="Our team" />
+
+<!-- bug: widths without sizes -->
+<Image src={cover} widths={[400, 800, 1200]} alt="Conference stage, small" />

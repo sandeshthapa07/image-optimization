@@ -1,0 +1,166 @@
+{
+  "skill_name": "image-optimization",
+  "description": "Each case is a broken file. Give the prompt to an agent that has the skill installed, then check the expectations. Automated check: after the fix, `node scripts/audit-images.mjs <fixed file>` must report 0 errors.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "stretched-flex",
+      "prompt": "The images on this page look squished on mobile and stretched in the thumbnails. Fix them. File: evals/cases/01-stretched-flex.html",
+      "files": ["evals/cases/01-stretched-flex.html"],
+      "expected_output": "All four images keep their aspect ratio at every width.",
+      "expectations": [
+        "Adds height: auto to the .post img rule (or a global img { max-width: 100%; height: auto; } reset)",
+        "Adds object-fit: cover (or contain) to .thumb and explains that cover crops the portrait photo",
+        "Fixes the flex row image: flex-shrink: 0, or a wrapper, and object-fit for the square box",
+        "Fixes the inline style on the team image (object-fit: cover, or height: auto instead of 320px)",
+        "Does not remove the width/height attributes"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "lazy-hero",
+      "prompt": "Lighthouse says our LCP is slow and images are too big. Fix the image markup. File: evals/cases/02-lazy-hero.html",
+      "files": ["evals/cases/02-lazy-hero.html"],
+      "expected_output": "One LCP image with high priority and correct dimensions; correct sizes; no conflicting preload.",
+      "expectations": [
+        "Removes loading=\"lazy\" from the hero and adds fetchpriority=\"high\"",
+        "Adds width and height to the hero (and asks for or reads the real dimensions instead of guessing)",
+        "Replaces data-src / lazyload on the banner with a real src (and no JavaScript lazy loading)",
+        "Removes fetchpriority=\"high\" from the four product cards",
+        "Adds a sizes attribute to every srcset with w descriptors, based on the grid layout (or asks for the layout)",
+        "Resolves the preload/lazy conflict for promo.jpg (removes the preload, or removes lazy if the image is above the fold)",
+        "Adds alt and dimensions to the footer logo",
+        "Product cards below the fold get loading=\"lazy\""
+      ]
+    },
+    {
+      "id": 3,
+      "name": "nextjs-cards",
+      "prompt": "Our Next.js 15 product page has a slow LCP and the product cards look stretched. Fix it. File: evals/cases/03-nextjs-cards.tsx",
+      "files": ["evals/cases/03-nextjs-cards.tsx"],
+      "expected_output": "Hero has priority; cards have sizes, objectFit cover and no priority (or only the first); avatar has dimensions and object-cover.",
+      "expectations": [
+        "Adds priority to the ProductHero image (Next.js 15), and mentions loading=\"eager\" + fetchPriority=\"high\" for Next.js 16+",
+        "Removes priority from the cards in the map (or makes it conditional on the first item)",
+        "Adds sizes to the fill images that matches grid-cols-2 / lg:grid-cols-4",
+        "Adds objectFit cover (style or className object-cover) to the fill images",
+        "Adds width and height (48x48 or similar) to the Avatar and object-cover, and fixes w-12 h-16 to a square or explains the crop",
+        "Checks the next.config remotePatterns for remote product images (or mentions it)"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "vue-gallery",
+      "prompt": "This Vue gallery (Vite SPA) has a slow hero and distorted photos. Fix it. File: evals/cases/04-vue-gallery.vue",
+      "files": ["evals/cases/04-vue-gallery.vue"],
+      "expected_output": "Hero is a real <img> with dimensions and fetchpriority high, preloaded in index.html; gallery has sizes and object-cover; GIF replaced.",
+      "expectations": [
+        "Replaces v-lazy on the hero with :src, adds width/height and fetchpriority=\"high\"",
+        "Recommends a preload in index.html because the app is a client-rendered SPA",
+        "Adds sizes for the 1 / 3 column grid (for example (min-width: 768px) 33vw, 100vw, adjusted for gaps)",
+        "Adds object-cover to the w-full h-64 gallery images",
+        "Suggests replacing the GIF with a <video autoplay muted loop playsinline>"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "background-hero",
+      "prompt": "Our home page hero loads late and we download two promo images. Fix it. File: evals/cases/05-background-hero.html",
+      "files": ["evals/cases/05-background-hero.html"],
+      "expected_output": "Hero is an <img> with object-fit cover (or a preloaded, responsive background); promo uses <picture>; feature uses <picture> art direction.",
+      "expectations": [
+        "Converts the CSS background hero to an <img> with object-fit: cover and fetchpriority=\"high\" (or adds a matching preload and image-set)",
+        "Uses responsive files instead of a single 4000px image",
+        "Replaces the two display:none promo images with one <picture> and <source media>",
+        "Fixes the feature image: separate <source media> for the tall and wide crops, with width/height on each",
+        "Explains why (late discovery, both files download, aspect ratio changes)"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "angular-hero",
+      "prompt": "Angular shows errors and warnings about our images. Fix the component. File: evals/cases/06-angular-hero.component.ts",
+      "files": ["evals/cases/06-angular-hero.component.ts"],
+      "expected_output": "priority without loading; fill with sizes and object-fit; logo with width/height.",
+      "expectations": [
+        "Removes loading=\"lazy\" from the priority hero image",
+        "Adds sizes and object-fit: cover to the fill card image",
+        "Adds width and height to the logo (with the intrinsic size), or uses fill with a sized parent",
+        "Mentions configuring an image loader (CDN or custom) for automatic srcset"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "astro-page",
+      "prompt": "Make the images on this Astro 5 page fast and correct. File: evals/cases/07-astro-page.astro",
+      "files": ["evals/cases/07-astro-page.astro"],
+      "expected_output": "Hero has priority (5.10+) or eager + high; public image has dimensions or is imported; widths has sizes.",
+      "expectations": [
+        "Checks the Astro version and uses priority (5.10+) or loading=\"eager\" fetchpriority=\"high\" on the hero",
+        "Fixes /team.jpg: imports it from src/ or adds width and height",
+        "Adds sizes to the image with widths, or uses the layout prop"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "no-overreach",
+      "prompt": "Add a new product card component to examples/card-grid.html, matching the existing cards.",
+      "files": ["examples/card-grid.html"],
+      "expected_output": "A new card that follows the same pattern, without changing the existing correct images.",
+      "expectations": [
+        "The new card image has width, height, srcset, sizes matching the grid, loading=\"lazy\" and decoding=\"async\"",
+        "Does not add fetchpriority=\"high\" to the new card",
+        "Does not change the existing cards"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "social-meta",
+      "prompt": "When we share this page on Facebook, LinkedIn and WhatsApp there is no image, and on X there is no card. Fix the meta tags. The site is https://acme.com. File: evals/cases/08-social-meta.html",
+      "files": ["evals/cases/08-social-meta.html"],
+      "expected_output": "Complete og:* and twitter:* tags with an absolute 1200x630 JPG/PNG image.",
+      "expectations": [
+        "Changes og:title / og:description to use property= instead of name=",
+        "Replaces the relative SVG og:image with an absolute https://acme.com/... JPG or PNG at 1200x630",
+        "Explains that SVG is not supported for link previews and proposes creating a 1200x630 image (for example with scripts/make-social-images.mjs)",
+        "Adds og:image:width, og:image:height and og:image:alt",
+        "Adds twitter:card summary_large_image and removes or fixes the localhost twitter:image",
+        "Adds og:url and og:type",
+        "Mentions refreshing the cache (Facebook Sharing Debugger, LinkedIn Post Inspector) after deploying"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "social-image-sizes",
+      "prompt": "I have one product photo (4000x3000). Make the share images for Facebook, LinkedIn, WhatsApp, X and Pinterest, and give me the tags. Site: https://acme.com, folder /social.",
+      "files": [],
+      "expected_output": "1200x630 og image under 300 KB, optional 1200x600 X image, 1000x1500 Pinterest image, and the matching tags.",
+      "expectations": [
+        "Creates (or gives the exact command for) a 1200x630 JPG for og:image, compressed under about 300 KB",
+        "Explains that one 1200x630 image covers Facebook, LinkedIn and WhatsApp",
+        "Optionally creates a 1200x600 image for twitter:image, with twitter:card summary_large_image",
+        "Creates a 1000x1500 (2:3) image for Pinterest and explains data-pin-media",
+        "Prints tags with absolute https://acme.com/social/... URLs and the real width/height",
+        "Warns that cover cropping may cut off parts of the photo and suggests checking the crops"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "alt-text-policy",
+      "prompt": "Our policy is that every image must have its alt filled. Fix this product page. File: evals/cases/09-alt-text.html",
+      "files": ["evals/cases/09-alt-text.html"],
+      "expected_output": "Every image has a filled, specific alt; the decorative divider has a filled alt plus aria-hidden; og:image:alt and twitter:image:alt are added.",
+      "expectations": [
+        "Adds a specific alt to the image without alt (for example 'Acme Trail 2, red'), using the page context",
+        "Replaces alt=\"\", alt=\"image\" and alt=\"IMG_2041.jpg\" with specific descriptions that differ from each other (sole view, on foot, ...)",
+        "Removes the 'Image of' prefix",
+        "Gives the decorative divider a filled alt and aria-hidden=\"true\"",
+        "Gives the cart icon link image a functional alt such as 'Go to cart' (and does NOT add aria-hidden, because it is the only content of the link)",
+        "Adds og:image:alt and twitter:image:alt",
+        "Does not change the two correct images",
+        "Lists alt texts that are guesses as 'alt needs review'",
+        "After the fix, node scripts/audit-images.mjs evals/cases/09-alt-text.html reports 0 errors and 0 alt warnings"
+      ]
+    }
+  ]
+}

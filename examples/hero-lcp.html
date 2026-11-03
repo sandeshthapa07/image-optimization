@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hero (LCP) image example</title>
+
+  <!-- Only needed if the hero image is on another origin (image CDN) -->
+  <!-- <link rel="preconnect" href="https://images.example-cdn.com"> -->
+
+  <style>
+    img, picture, video, svg { max-width: 100%; height: auto; }
+
+    /* Text over the image, without a CSS background image */
+    .hero { position: relative; min-height: 70vh; display: grid; align-items: center; background: #1f2937; }
+    .hero__img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;          /* crop to the box, never stretch */
+      object-position: 50% 35%;   /* the focal point */
+    }
+    .hero__content { position: relative; padding: 2rem; color: #fff; max-width: 40rem; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <!--
+      Role: LCP / hero
+      - in the HTML, so the preload scanner finds it: no <link rel="preload"> needed
+      - fetchpriority="high": the only one on this page
+      - no loading="lazy", no decoding="async"
+      - width/height: intrinsic size of the largest file (16:9)
+      - sizes="100vw": the image is as wide as the viewport
+    -->
+    <img
+      class="hero__img"
+      src="/images/hero-1280.jpg"
+      srcset="/images/hero-640.jpg 640w,
+              /images/hero-960.jpg 960w,
+              /images/hero-1280.jpg 1280w,
+              /images/hero-1920.jpg 1920w,
+              /images/hero-2560.jpg 2560w"
+      sizes="100vw"
+      width="2560" height="1440"
+      alt="Runner on a mountain trail at sunrise"
+      fetchpriority="high">
+    <!-- Every image needs a filled alt. If this photo were pure decoration, keep the alt and add aria-hidden="true". -->
+
+    <div class="hero__content">
+      <h1>Fast hero image</h1>
+      <p>Found early, high priority, correct size, no stretching, no layout shift.</p>
+    </div>
+  </section>
+
+  <main>
+    <!-- Below the fold: lazy -->
+    <img src="/images/feature-800.jpg"
+         srcset="/images/feature-400.jpg 400w, /images/feature-800.jpg 800w, /images/feature-1200.jpg 1200w"
+         sizes="auto, (min-width: 800px) 768px, calc(100vw - 32px)"
+         width="1200" height="800" alt="Team working at a desk"
+         loading="lazy" decoding="async">
+  </main>
+</body>
+</html>

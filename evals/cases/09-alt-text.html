@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eval 09: alt text policy</title>
+  <meta property="og:title" content="Acme Trail 2 running shoe">
+  <meta property="og:image" content="https://acme.com/social/trail-og-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- bug: no og:image:alt, no twitter:image:alt -->
+</head>
+<body>
+  <!-- bug: missing alt -->
+  <img src="/images/trail-2-red.jpg" width="1200" height="900">
+
+  <!-- bug: empty alt on a product photo -->
+  <img src="/images/trail-2-sole.jpg" width="1200" height="900" alt="">
+
+  <!-- bug: generic alt -->
+  <img src="/images/trail-2-onfoot.jpg" width="1200" height="900" alt="image">
+
+  <!-- bug: file name as alt -->
+  <img src="/images/IMG_2041.jpg" width="1200" height="900" alt="IMG_2041.jpg">
+
+  <!-- bug: redundant prefix -->
+  <img src="/images/trail-2-box.jpg" width="800" height="600" alt="Image of the shoe box">
+
+  <!-- bug: decorative divider with empty alt (policy: filled alt + aria-hidden) -->
+  <img src="/images/wave-divider.svg" width="1200" height="40" alt="">
+
+  <!-- bug: alt attribute without a value -->
+  <a href="/cart"><img src="/images/cart-icon.png" width="24" height="24" alt></a>
+
+  <!-- correct: keep these as they are -->
+  <img src="/images/jane-48.jpg" width="48" height="48" alt="Jane Doe" aria-hidden="true"> <span>Jane Doe</span>
+  <img src="/images/trail-2-side.jpg" width="1200" height="900" alt="Acme Trail 2, red, side view">
+</body>
+</html>

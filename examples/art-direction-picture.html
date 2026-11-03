@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Art direction with picture</title>
+  <style>
+    img { max-width: 100%; height: auto; display: block; }
+    .hero img { width: 100%; }
+  </style>
+</head>
+<body>
+  <!--
+    Mobile: tall 4:5 crop. Desktop (>= 768px): wide 21:9 crop.
+    Each crop has AVIF and WebP versions, plus a JPEG fallback.
+
+    Rules:
+    - the first matching <source> wins, so put media + type sources in order
+    - width/height on every <source> (each crop has its own ratio) and on the <img>
+    - sizes on every <source> (sources do not inherit it)
+    - alt, fetchpriority, loading, class go on the <img>
+  -->
+  <picture class="hero">
+    <!-- Desktop, wide crop -->
+    <source media="(min-width: 768px)" type="image/avif"
+            srcset="/images/hero-wide-1280.avif 1280w, /images/hero-wide-1920.avif 1920w, /images/hero-wide-2560.avif 2560w"
+            sizes="100vw" width="2560" height="1097">
+    <source media="(min-width: 768px)" type="image/webp"
+            srcset="/images/hero-wide-1280.webp 1280w, /images/hero-wide-1920.webp 1920w, /images/hero-wide-2560.webp 2560w"
+            sizes="100vw" width="2560" height="1097">
+    <source media="(min-width: 768px)"
+            srcset="/images/hero-wide-1280.jpg 1280w, /images/hero-wide-1920.jpg 1920w, /images/hero-wide-2560.jpg 2560w"
+            sizes="100vw" width="2560" height="1097">
+
+    <!-- Mobile, tall crop -->
+    <source type="image/avif"
+            srcset="/images/hero-tall-480.avif 480w, /images/hero-tall-750.avif 750w, /images/hero-tall-1080.avif 1080w"
+            sizes="100vw" width="1080" height="1350">
+    <source type="image/webp"
+            srcset="/images/hero-tall-480.webp 480w, /images/hero-tall-750.webp 750w, /images/hero-tall-1080.webp 1080w"
+            sizes="100vw" width="1080" height="1350">
+
+    <!-- Fallback and the element that is displayed -->
+    <img src="/images/hero-tall-750.jpg"
+         srcset="/images/hero-tall-480.jpg 480w, /images/hero-tall-750.jpg 750w, /images/hero-tall-1080.jpg 1080w"
+         sizes="100vw" width="1080" height="1350"
+         alt="Runner on a mountain trail at sunrise"
+         fetchpriority="high">
+  </picture>
+
+  <!--
+    Do not preload this <picture>: a preload cannot choose by type, so a browser that supports
+    AVIF and WebP could download both. fetchpriority="high" on the <img> is enough because
+    the <picture> is in the HTML.
+  -->
+</body>
+</html>
