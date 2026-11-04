@@ -101,7 +101,14 @@ These skills give your agent the rules that it is missing, so it gets the detail
 
 ## Reference
 
-- **[image-optimization](./skills/image-optimization/SKILL.md)** `v1.0.0` — Fix images that stretch, look blurry, load slowly or shift the layout, in any framework. It gives every image a role (LCP, above the fold, below the fold, background) and applies the right `srcset`, `sizes`, `loading` and `fetchpriority` for that role. Also covers AVIF/WebP, alt text and social share images (`og:image`, X cards), with audit scripts that check the result.
+- **[image-optimization](./skills/image-optimization/)** `v1.0.0` — Fix images that stretch, look blurry, load slowly or shift the layout, in any framework. It gives every image a role (LCP, above the fold, below the fold, background) and applies the right `srcset`, `sizes`, `loading` and `fetchpriority` for that role. Also covers AVIF/WebP, alt text and social share images (`og:image`, X cards), with audit scripts that check the result.
+
+## Cheatsheets
+
+Quick fixes, one line each:
+
+- **[Cheatsheet](./cheatsheet.md)** — Stretched, blurry or broken images, alt text and link previews.
+- **[Performance Cheatsheet](./performance.md)** — Slow LCP, layout shift, oversized downloads, formats and caching.
 
 ## Contributing
 

@@ -22,10 +22,11 @@
 3. Add the skill to the [Reference](README.md#reference) list in `README.md`, with its version:
 
    ```markdown
-   - **[my-skill](./skills/my-skill/SKILL.md)** `v1.0.0` — What the skill does, in one or two sentences.
+   - **[my-skill](./skills/my-skill/)** `v1.0.0` — What the skill does, in one or two sentences.
    ```
 
-4. Check that the CLI finds the skill:
+4. If the skill has quick one-line fixes, add them to [`cheatsheet.md`](cheatsheet.md) or [`performance.md`](performance.md).
+5. Check that the CLI finds the skill:
 
    ```bash
    npx skills add . --list
@@ -60,6 +61,8 @@ When you change a skill, increase its version in all three places:
 ```
 skills/
 ├── README.md                  # skill list and install guide
+├── cheatsheet.md              # problem → solution, one line each
+├── performance.md             # performance problem → solution, one line each
 ├── CONTRIBUTING.md            # this file
 ├── LICENSE
 ├── assets/
