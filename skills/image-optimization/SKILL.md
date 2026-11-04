@@ -2,6 +2,8 @@
 name: image-optimization
 description: Diagnose and fix web image problems - stretched, squished or distorted images, blurry or oversized downloads, layout shift (CLS), wrong srcset/sizes, slow LCP, misuse of loading="lazy"/"eager", fetchpriority and preload - and social share images (og:image, Open Graph, Twitter/X cards, link previews on Facebook, LinkedIn, WhatsApp, Slack, Discord). Works with HTML/CSS, React, Next.js, Remix, Gatsby, Vue, Nuxt, Angular, Svelte, SolidJS, Astro, Qwik, WordPress, Shopify, Eleventy and Hugo. Use when images stretch, look blurry, load slowly, shift the layout or differ between mobile and desktop; when a shared link shows no image, the wrong image or a cropped image; or when the user asks about responsive images, srcset, sizes, picture, AVIF/WebP, lazy loading, fetchpriority, LCP, CLS, og:image sizes, meta tags, next/image, NgOptimizedImage, NuxtImg, astro:assets, enhanced:img or Lighthouse image warnings.
 license: MIT
+metadata:
+  version: "1.0.0"
 ---
 
 # Image Optimization

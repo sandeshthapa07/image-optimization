@@ -10,7 +10,7 @@ evals/
 
 ## Run a case by hand
 
-1. Copy the skill folder to the tool you want to test (see the main README).
+1. Copy the skill folder to the tool you want to test (see the skill's [README](../README.md#install)).
 2. Copy `evals/cases/` to a scratch project, so the originals stay broken.
 3. Give the agent the `prompt` of a case.
 4. Check the result against the case's `expectations`.
